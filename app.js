@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 
 const { MONGOURI } = require("./keys");
+require("./models/user");
 const app = express();
 const PORT = 5000;
 
@@ -22,5 +23,3 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
   console.log("server is running", PORT);
 });
-
-// hello hAHmI5wFemnUmlqS
