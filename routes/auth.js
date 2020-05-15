@@ -40,4 +40,28 @@ router.post("/signup", (req, res) => {
     });
 });
 
+router.post("/signin", (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    return res.status(422).json({ error: "Please enter password and email" });
+  }
+
+  User.findOne({ email: email }).then((savedUser) => {
+    if (!savedUser) {
+      return res.status(422).json({ error: "Invail Email or Password" });
+    }
+    bcrypt
+      .compare(password, savedUser.password)
+      .then((doMatach) => {
+        if (doMatach) {
+          res.json({ message: "Successfully Signin" });
+        } else {
+          return res.status(422).json({ error: "Invail Email or Password" });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+});
 module.exports = router;
